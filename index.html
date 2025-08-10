@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asharikandi Nava Nirman Society</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .page-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .active-page {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b0b0b0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888;
+        }
+        .carousel-item {
+            display: none;
+            transition: opacity 1s ease-in-out;
+        }
+        .carousel-item.active {
+            display: block;
+            opacity: 1;
+        }
+        /* Custom styles for the mobile menu */
+        #mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            display: none;
+        }
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            transition: left 0.3s ease-in-out;
+            z-index: 50;
+            padding: 1rem;
+        }
+        #mobile-menu.open {
+            left: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <!-- Main Application Wrapper -->
+        <div id="app" class="bg-white shadow-2xl rounded-3xl overflow-hidden min-h-[90vh] flex flex-col">
+
+            <!-- Navigation Bar -->
+            <header class="flex justify-between items-center bg-orange-600 text-white p-4 md:p-6 shadow-xl">
+                <div class="flex items-center">
+                    <img src="image.png" alt="Society Logo" class="h-14 w-14 mr-4 rounded-full border-2 border-white object-cover shadow-lg">
+                    <span class="text-xl md:text-3xl font-extrabold tracking-tight hidden md:block">Asharikandi Nava Nirman Society</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <button onclick="showPage('home')" class="text-white hover:text-orange-200 transition-colors duration-300 font-semibold text-lg hover:bg-orange-700 py-2 px-4 rounded-full">Home</button>
+                    <button onclick="showPage('user-dashboard')" class="text-white hover:text-orange-200 transition-colors duration-300 font-semibold text-lg hover:bg-orange-700 py-2 px-4 rounded-full">My Dashboard</button>
+                    <button onclick="showPage('admin-dashboard')" class="text-white hover:text-orange-200 transition-colors duration-300 font-semibold text-lg hover:bg-orange-700 py-2 px-4 rounded-full">Admin</button>
+                </nav>
+
+                <!-- Hamburger Menu Button for Mobile -->
+                <button id="hamburger-button" class="md:hidden text-white" onclick="toggleMobileMenu()">
+                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+            <div id="mobile-menu" class="md:hidden">
+                <div class="flex justify-end p-4">
+                    <button onclick="toggleMobileMenu()" class="text-gray-800">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <nav class="flex flex-col space-y-4 text-center mt-4">
+                    <button onclick="showPage('home'); toggleMobileMenu()" class="block text-gray-800 hover:bg-orange-100 transition-colors duration-300 font-semibold text-lg py-2 rounded-full">Home</button>
+                    <button onclick="showPage('user-dashboard'); toggleMobileMenu()" class="block text-gray-800 hover:bg-orange-100 transition-colors duration-300 font-semibold text-lg py-2 rounded-full">My Dashboard</button>
+                    <button onclick="showPage('admin-dashboard'); toggleMobileMenu()" class="block text-gray-800 hover:bg-orange-100 transition-colors duration-300 font-semibold text-lg py-2 rounded-full">Admin</button>
+                </nav>
+            </div>
+
+            <!-- Homepage Section -->
+            <section id="home" class="page-content active-page p-6 md:p-10 flex-grow">
+                <div class="flex flex-col items-center text-center">
+                    <!-- Hero Carousel Section -->
+                    <div class="w-full relative rounded-2xl overflow-hidden h-[250px] md:h-[400px] mb-12 shadow-2xl">
+                        <div id="hero-carousel" class="w-full h-full">
+                            <div class="carousel-item active w-full h-full bg-cover bg-center" style="background-image: url('https://placehold.co/1400x500/F97316/FFFFFF?text=Community+Event');">
+                                <div class="bg-black bg-opacity-40 flex flex-col items-center justify-center h-full p-4">
+                                    <h1 class="text-2xl md:text-6xl font-extrabold text-white drop-shadow-xl leading-tight">Working Together for a Better Community</h1>
+                                    <p class="mt-2 md:mt-4 text-sm md:text-2xl text-gray-200 font-medium">Join us in our mission to build a stronger society.</p>
+                                    <button class="mt-4 md:mt-8 px-6 md:px-8 py-2 md:py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:bg-gray-200 transform hover:scale-105 transition-all duration-300 text-sm md:text-base">Join Now</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item w-full h-full bg-cover bg-center" style="background-image: url('https://placehold.co/1400x500/F0F2F5/F97316?text=Building+a+Future+Together');">
+                                <div class="bg-black bg-opacity-40 flex flex-col items-center justify-center h-full p-4">
+                                    <h1 class="text-2xl md:text-6xl font-extrabold text-white drop-shadow-xl leading-tight">Building a Future Together</h1>
+                                    <p class="mt-2 md:mt-4 text-sm md:text-2xl text-gray-200 font-medium">Be a part of our journey towards progress.</p>
+                                    <button class="mt-4 md:mt-8 px-6 md:px-8 py-2 md:py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:bg-gray-200 transform hover:scale-105 transition-all duration-300 text-sm md:text-base">Join Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mission Section with improved styling -->
+                    <div class="mb-12 text-gray-700 max-w-4xl">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Mission</h2>
+                        <p class="text-lg leading-relaxed">The Asharikandi Nava Nirman Society is dedicated to the progress and upliftment of our community. Through collaboration, mutual support, and transparent governance, we strive to build a better future for all our members.</p>
+                    </div>
+
+                    <!-- Achievements Section with enhanced card design -->
+                    <div class="w-full">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-left">Recent Achievements</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <!-- Achievement Post 1 -->
+                            <div class="bg-gray-50 p-8 rounded-2xl shadow-xl border-t-4 border-orange-500 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
+                                <img src="https://placehold.co/600x400/F97316/FFFFFF?text=Clean-Up+Drive" alt="Clean-up drive" class="w-full rounded-xl mb-4 shadow-md">
+                                <h3 class="text-xl font-bold text-orange-600 mb-2">Clean-Up Drive in Sector 5</h3>
+                                <p class="text-gray-600 mb-4 text-sm leading-relaxed">Our society successfully organized a massive clean-up drive, resulting in a cleaner and healthier neighborhood for everyone. Over 50 members participated.</p>
+                                <a href="#" class="text-orange-600 font-semibold hover:underline">View Details &rarr;</a>
+                            </div>
+                            <!-- Achievement Post 2 -->
+                            <div class="bg-gray-50 p-8 rounded-2xl shadow-xl border-t-4 border-orange-500 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
+                                <img src="https://placehold.co/600x400/22C55E/FFFFFF?text=Health+Camp" alt="Health check-up camp" class="w-full rounded-xl mb-4 shadow-md">
+                                <h3 class="text-xl font-bold text-orange-600 mb-2">Annual Health Check-Up Camp</h3>
+                                <p class="text-gray-600 mb-4 text-sm leading-relaxed">We hosted our annual health camp, providing free medical consultations and check-ups to all residents. Doctors from City Hospital volunteered their time.</p>
+                                <a href="#" class="text-orange-600 font-semibold hover:underline">View Details &rarr;</a>
+                            </div>
+                            <!-- Achievement Post 3 -->
+                            <div class="bg-gray-50 p-8 rounded-2xl shadow-xl border-t-4 border-orange-500 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
+                                <img src="https://placehold.co/600x400/93C5FD/FFFFFF?text=Community+Center" alt="New community center" class="w-full rounded-xl mb-4 shadow-md">
+                                <h3 class="text-xl font-bold text-orange-600 mb-2">New Community Center Inauguration</h3>
+                                <p class="text-gray-600 mb-4 text-sm leading-relaxed">The new community center is now open! This space will be used for workshops, events, and gatherings for all our members.</p>
+                                <a href="#" class="text-orange-600 font-semibold hover:underline">View Details &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Dashboard Section -->
+            <section id="user-dashboard" class="page-content p-6 md:p-10 flex-grow">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Welcome, Ninkor</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Deposits Card -->
+                    <div class="bg-orange-100 p-6 rounded-2xl shadow-lg border-l-4 border-orange-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Total Deposits</p>
+                        <p class="text-4xl font-extrabold text-orange-800 mt-2">Rs. 22,000</p>
+                    </div>
+                    <!-- Gained Interest Card -->
+                    <div class="bg-green-100 p-6 rounded-2xl shadow-lg border-l-4 border-green-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Gained Interest</p>
+                        <p class="text-4xl font-extrabold text-green-800 mt-2">Rs. 750</p>
+                    </div>
+                    <!-- Loan Amount Card -->
+                    <div class="bg-blue-100 p-6 rounded-2xl shadow-lg border-l-4 border-blue-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Loan Amount</p>
+                        <p class="text-4xl font-extrabold text-blue-800 mt-2">Rs. 5,000</p>
+                    </div>
+                    <!-- Payment Status Card -->
+                    <div class="bg-red-100 p-6 rounded-2xl shadow-lg border-l-4 border-red-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Outstanding Dues</p>
+                        <p class="text-4xl font-extrabold text-red-800 mt-2">Rs. 300</p>
+                        <button class="mt-4 px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition-colors duration-200 text-sm">Pay Dues Now</button>
+                    </div>
+                </div>
+
+                <!-- Payment Status and Reminders -->
+                <div class="mb-8 p-6 bg-gray-100 rounded-xl shadow-inner">
+                    <p class="text-gray-700 font-medium">Monthly payment due on the 1st of every month.</p>
+                    <p class="text-gray-700 font-medium">You will receive a WhatsApp reminder on the 28th of each month.</p>
+                </div>
+
+                <!-- Loan Request Section -->
+                <div class="mb-8 p-6 bg-orange-50 rounded-xl shadow-md border-l-4 border-orange-500">
+                    <h3 class="text-2xl font-bold text-orange-800 mb-4">Request a Loan</h3>
+                    <p class="text-gray-700 mb-4">You can request a loan here. Your request will be reviewed by the admin team.</p>
+                    <button class="px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:bg-orange-700 transition-colors duration-200">Request Loan</button>
+                </div>
+
+                <!-- Transactions History -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Your Transactions</h3>
+                <div class="bg-gray-100 p-6 rounded-xl shadow-md">
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center border-b pb-2">
+                            <span class="text-gray-700">2024-07-01: Monthly Deposit</span>
+                            <span class="text-green-600 font-semibold">+ Rs. 300</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b pb-2">
+                            <span class="text-gray-700">2024-06-25: Late Fee</span>
+                            <span class="text-red-600 font-semibold">- Rs. 30</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b pb-2">
+                            <span class="text-gray-700">2024-06-01: Monthly Deposit</span>
+                            <span class="text-green-600 font-semibold">+ Rs. 300</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Admin Dashboard Section -->
+            <section id="admin-dashboard" class="page-content p-6 md:p-10 flex-grow">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Admin Portal</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Total Amount Card -->
+                    <div class="bg-orange-100 p-6 rounded-2xl shadow-lg border-l-4 border-orange-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Total Society Amount</p>
+                        <p class="text-4xl font-extrabold text-orange-800 mt-2">Rs. 5,00,000</p>
+                    </div>
+                    <!-- Total Members Card -->
+                    <div class="bg-orange-100 p-6 rounded-2xl shadow-lg border-l-4 border-orange-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Total Members</p>
+                        <p class="text-4xl font-extrabold text-orange-800 mt-2">5</p>
+                    </div>
+                    <!-- Total Dues Card -->
+                    <div class="bg-red-100 p-6 rounded-2xl shadow-lg border-l-4 border-red-600 transition-shadow hover:shadow-xl">
+                        <p class="text-gray-600 text-lg font-medium">Total Dues</p>
+                        <p class="text-4xl font-extrabold text-red-800 mt-2">Rs. 1,500</p>
+                    </div>
+                </div>
+
+                <!-- Manage Users Table -->
+                <div class="bg-gray-100 p-6 rounded-xl shadow-md mb-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Manage Users</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deposits</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loan</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ninkor</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 22,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 5,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-orange-600 hover:text-orange-900">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Biki</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 22,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 0</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-orange-600 hover:text-orange-900">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tarun</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 22,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 0</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-orange-600 hover:text-orange-900">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Anup</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 22,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-orange-600 hover:text-orange-900">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Amrit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 22,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="#" class="text-orange-600 hover:text-orange-900">Edit</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Loan Requests Section -->
+                <div class="bg-gray-100 p-6 rounded-xl shadow-md mb-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Loan Requests</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ninkor</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rs. 10,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-600 font-semibold">Pending</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-green-600 hover:text-green-900">Approve</button> |
+                                        <button class="text-red-600 hover:text-red-900">Deny</button>
+                                    </td>
+                                </tr>
+                                <!-- More loan requests would be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- A simple, responsive footer -->
+            <footer class="bg-gray-800 text-gray-400 p-6 md:p-8 mt-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center text-center">
+                    <p>&copy; 2024 Asharikandi Nava Nirman Society</p>
+                    <div class="mt-4 md:mt-0 space-x-4">
+                        <a href="#" class="hover:text-white transition-colors duration-200">About Us</a>
+                        <a href="#" class="hover:text-white transition-colors duration-200">Contact</a>
+                        <!-- Add social media links here -->
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle page switching and the hero carousel -->
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.remove('active-page'));
+            
+            const currentPage = document.getElementById(pageId);
+            if (currentPage) {
+                currentPage.classList.add('active-page');
+            }
+        }
+
+        // Hero carousel functionality
+        const carouselItems = document.querySelectorAll('#hero-carousel .carousel-item');
+        let currentCarouselIndex = 0;
+
+        function showNextCarouselItem() {
+            carouselItems[currentCarouselIndex].classList.remove('active');
+            currentCarouselIndex = (currentCarouselIndex + 1) % carouselItems.length;
+            carouselItems[currentCarouselIndex].classList.add('active');
+        }
+
+        setInterval(showNextCarouselItem, 5000); // Change image every 5 seconds
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                overlay.style.display = 'none';
+            } else {
+                menu.classList.add('open');
+                overlay.style.display = 'block';
+            }
+        }
+
+        // Initially show the home page on load
+        window.onload = () => showPage('home');
+    </script>
+</body>
+</html>
